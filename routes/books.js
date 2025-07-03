@@ -1,58 +1,3 @@
-// import express from 'express';
-// import { authenticate } from '../middlewares/auth.js';
-// import { readJSON, writeJSON } from '../utils/fileHandler.js';
-// import { v4 as uuid } from 'uuid';
-
-// const router = express.Router();
-// router.use(authenticate);
-
-// const BOOK_FILE = './data/books.json';
-
-// router.get('/', async (req, res) => {
-//   const books = await readJSON(BOOK_FILE);
-//   const { genre, page = 1, limit = 10 } = req.query;
-//   let filtered = genre ? books.filter(b => b.genre === genre) : books;
-//   const start = (page - 1) * limit;
-//   res.json(filtered.slice(start, start + +limit));
-// });
-
-// router.get('/:id', async (req, res) => {
-//   const books = await readJSON(BOOK_FILE);
-//   const book = books.find(b => b.id === req.params.id);
-//   if (!book) return res.status(404).json({ message: 'Not found' });
-//   res.json(book);
-// });
-
-// router.post('/', async (req, res) => {
-//   const book = { id: uuid(), ...req.body, userId: req.user.id };
-//   const books = await readJSON(BOOK_FILE);
-//   books.push(book);
-//   await writeJSON(BOOK_FILE, books);
-//   res.status(201).json(book);
-// });
-
-// router.put('/:id', async (req, res) => {
-//   const books = await readJSON(BOOK_FILE);
-//   const index = books.findIndex(b => b.id === req.params.id);
-//   if (index === -1) return res.status(404).json({ message: 'Not found' });
-//   if (books[index].userId !== req.user.id) return res.status(403).json({ message: 'Forbidden' });
-//   books[index] = { ...books[index], ...req.body };
-//   await writeJSON(BOOK_FILE, books);
-//   res.json(books[index]);
-// });
-
-// router.delete('/:id', async (req, res) => {
-//   const books = await readJSON(BOOK_FILE);
-//   const index = books.findIndex(b => b.id === req.params.id);
-//   if (index === -1) return res.status(404).json({ message: 'Not found' });
-//   if (books[index].userId !== req.user.id) return res.status(403).json({ message: 'Forbidden' });
-//   books.splice(index, 1);
-//   await writeJSON(BOOK_FILE, books);
-//   res.json({ message: 'Book deleted' });
-// });
-
-// export default router;
-
 import express from 'express';
 import { authenticate } from '../middlewares/auth.js';
 import { readJSON, writeJSON } from '../utils/fileHandler.js';
@@ -63,22 +8,6 @@ router.use(authenticate);
 
 const BOOK_FILE = './data/books.json';
 
-// GET /books (with optional genre + pagination)
-// router.get('/', async (req, res) => {
-//   try {
-//     const books = await readJSON(BOOK_FILE);
-//     const { genre, page = 1, limit = 10 } = req.query;
-
-//     let filtered = genre ? books.filter(b => b.genre === genre) : books;
-//     const start = (page - 1) * limit;
-//     const paginated = filtered.slice(start, start + +limit);
-
-//     res.json({ success: true, data: paginated });
-//   } catch (err) {
-//     console.error('Get books error:', err);
-//     res.status(500).json({ success: false, message: 'Failed to fetch books' });
-//   }
-// });
 router.get('/', async (req, res) => {
   try {
     const books = await readJSON(BOOK_FILE);
@@ -92,7 +21,6 @@ router.get('/', async (req, res) => {
       );
     }
 
-    // Pagination
     const startIndex = (parseInt(page) - 1) * parseInt(limit);
     const paginatedBooks = filteredBooks.slice(startIndex, startIndex + parseInt(limit));
 
@@ -112,7 +40,6 @@ router.get('/', async (req, res) => {
 
 
 
-// GET /books/:id
 router.get('/:id', async (req, res) => {
   try {
     const books = await readJSON(BOOK_FILE);
@@ -125,7 +52,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /books
 router.post('/', async (req, res) => {
   try {
     const { title, author, genre } = req.body;
@@ -146,7 +72,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /books/:id
 router.put('/:id', async (req, res) => {
   try {
     const books = await readJSON(BOOK_FILE);
@@ -167,7 +92,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /books/:id
 router.delete('/:id', async (req, res) => {
   try {
     const books = await readJSON(BOOK_FILE);

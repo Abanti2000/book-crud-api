@@ -21,29 +21,13 @@ A RESTful API for a bookstore application built with Node.js and Express, featur
 - **JWT** - Authentication tokens
 - **bcryptjs** - Password hashing
 - **uuid** - Unique ID generation
-- **Jest & Supertest** - Testing framework
 
-## Project Structure
-
-```
-bookstore-api/
-├── server.js              # Main application file
-├── package.json           # Dependencies and scripts
-├── .env                   # Environment variables
-├── .gitignore            # Git ignore file
-├── README.md             # This file
-├── data/                 # Data storage directory
-│   ├── books.json        # Books data file
-│   └── users.json        # Users data file
-└── tests/                # Test files
-    └── api.test.js       # API tests
-```
 
 ## Installation & Setup
 
 1. **Clone the repository:**
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Abanti2000/book-crud-api.git
 cd bookstore-api
 ```
 
@@ -312,13 +296,11 @@ curl -X GET "http://localhost:3000/books/search?genre=fiction" \
 
 ## Testing with Postman
 
-1. **Import the collection**: Create a new Postman collection and add the following requests:
-
-2. **Set environment variables**:
+1. **Set environment variables**:
    - `baseUrl`: `http://localhost:3000`
    - `token`: (will be set after login)
 
-3. **Test sequence**:
+2. **Test sequence**:
    - Register user → Login → Get token → Test book operations
 
 ## Running Tests
@@ -327,8 +309,6 @@ curl -X GET "http://localhost:3000/books/search?genre=fiction" \
 # Run all tests
 npm test
 
-# Run tests with coverage
-npm run test:coverage
 ```
 
 ## Error Handling
@@ -515,11 +495,3 @@ GET /books?genre=fiction&page=1&limit=5
 curl -X GET "http://localhost:3000/books?genre=fiction&page=1&limit=5" \
   -H "Authorization: Bearer <TOKEN>"
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make changes and add tests
-4. Run tests to ensure they pass
-5. Submit a pull request
